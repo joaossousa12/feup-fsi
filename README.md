@@ -1,9 +1,9 @@
 
 Breve descrição do grupo
 
-* Turno: [L]XX
-* Grupo: YY
+* Turno: [L]06
+* Grupo: 08
 * Alunos:
-    - Aluno1 upZZZZZ 
-    - Aluno2 upZZZZZ
-    - Aluno3 upZZZZZ
+    - João Pedro Seabra Pedrosa Botelho de Sousa up202106996
+    - José Pedro Soares de Oliveira up202108764
+    - Pedro de Teixeira Lopes Basilio Plácido up202107987
