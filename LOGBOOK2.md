@@ -6,6 +6,8 @@
 
 - A única aplicação afetada por esta vulnerabilidade foi o Internet Explorer corrido em Windows, abrangendo várias das suas versões.
 
+- As versões do Internet Explorer afetadas foram: Internet Explorer 11 no Windows 7/8.1/10, Internet Explorer 9 no Windows Server 2008 e Internet Explorer 10 no Windows Server 2012.
+
 ## Catalogação
 
 - Foi catalogada e publicamente divulgada em Setembro de 2019 por Clément Lecigne (Google’s Threat Analysis Group).
@@ -13,6 +15,8 @@
 - Relativamente a Bug Bounties não há nenhuma informação já que esta vulnerabilidade foi descoberta pela própria fornecedora do browser (Microsoft).
 
 - Esta vulnerabilidade foi considerada de alta gravidade devido ao potencial de execução de código remoto por um atacante.
+
+- Esta vulnerabilidade está classificada no sistema CWE como CWE-787 ("Out-of-bounds Write"). Esta classificação consiste numa vulnerabilidade em que ocorre a escrita de dados para além dos limites permitidos numa área de memória.
 
 ## Exploit
 
