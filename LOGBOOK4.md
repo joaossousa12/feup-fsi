@@ -19,7 +19,9 @@
 
 ## Task 4: Environment Variables and system()
 
->
+> Ao usar `system()`, as _environment variables_ do processo anterior são passadas para um novo processo. Isso ocorre porque essa função executa `/bin/sh -c comando`. Basicamente, `system()` utiliza `execl()` para executar o `/bin/sh`, que por sua vez, chama `execve()`, transmitindo as _environment variables_. Assim, ao usar `system()`, as _environment variables_ do processo anterior são transmitidas para o novo programa (/bin/sh).
+
+> Por outro lado, ao chamar `execve()`, o processo atual é substituído pelo comando fornecido, mantendo as _environment variables_ existentes a menos que sejam explicitamente alteradas nos argumentos passados para o `execve()`.
 
 ## Task 5: Environment Variable and Set-UID Programs
 
