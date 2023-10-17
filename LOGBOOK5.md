@@ -21,4 +21,42 @@
 
 ##  Task 2: Understanding the Vulnerable Program
 
+> Nesta _task_ começamos por examinar o código que nos é fornecido no programa ```stack.c```, e conseguimos logo á partida averiguar que existe uma vulnerabilidade de _buffer overflow_ uma vez que tentamos copiar os conteúdos de uma _string_ ```str``` de 517 _bytes_ para um _buffer_ que só tem 100 _bytes_ de tamanho usando a função ```strcpy``` que não verifica os limites do _buffer_ originando assim o _buffer overflow_.<br><br>
+> Para enfraquecer a segurança do programa, desativamos certas proteções, como o _StackGuard_ e a prevenção contra a execução de código a partir da _stack_. Além disso, alteramos as permissões do programa para _root_ e transformamos o programa num programa _Set-UID_. 
+> ```bash
+> $ gcc -DBUF_SIZE=100 -m32 -o stack -z execstack -fno-stack-protector stack.c
+> $ sudo chown root stack
+> $ sudo chmod 4755 stack
+> ```
+
+## Task 3: Launching Attack on 32-bit Program (Level 1)
+
+> Nesta _task_ começamos por criar um ficheiro vazio ao qual chamamos ```badfile```. De seguida damos _debug_ ao ```stack-L1-dbg``` de modo a encontrar a posição do endereço de retorno da função ```bof``` em relação ao início do _buffer_. Usámos o ```gdb``` para o _debug_ e colocamos um _breakpoint_ na função ```bop``` da seguinte maneira: <br>
+> ```bash
+> $ touch badfile  # <- Create an empty badfile
+> $ gdb stack-L1-dbg # executar o programa em modo debug
+> gdb-peda$ b bof # <- Set a break point at function bof()
+> Breakpoint 1 at 0x12ad: file stack.c, line 16.
+> gdb-peda$ run # <- Start executing the program
+> ...
+> Breakpoint 1 at 0x12ad: file stack.c, line 16.
+> 16      {
+> gdb-peda$ next # Avançamos com algumas instruções até que o registro ebp passe de apontar para a stack frame da função que chamou "bof()" para a stack frame da própria função "bof()".
+> ...
+> 20	    strcpy(buffer, str); 
+> gdb-peda$ p $ebp # <- Get the ebp value
+> $1 = (void *) 0xffffc9a8
+> gdb-peda$ p &buffer # <- Get the buffer's address
+> $3 = (char (*)[100]) 0xffffc93c
+> gdb-peda$ quit # <- Exit
+> ```
+> Desta maneira adquirimos os endereços que precisávamos, agora vamos por no ficheiro ```badfile``` o conteúdo que queremos inserir no _buffer_ (_shellcode_ e endereço de retorno que aponta para esse _shellcode_). Para isto usamos o programa fornecido em _python_, com as seguintes alterações: <br><br>
+> ![pyscript](images/logbook5/pyscript.png) <br>
+> Alterações feitas e notas: <br>
+> 1. Mudamos a variável ```shellcode``` para a que nos forneceram no ```call_shellcode.c``` (32-bits) que executa uma _shell_.
+> 2. Cria-se um _bytearray_ chamado ```content``` de tamanho 517 _bytes_, em que todos os _bytes_ nesse _array_ são 0x90.
+> 3. Criamos uma variável ```ret``` que vai conter o novo endereço de retorno que aponta para o _shell code_ a executar.
+> 4. Utilizando os dois endereços obtidos durante o processo, calculamos a posição do endereço de retorno em relação ao início do _array_ (```offset```). Em seguida, substituímos o endereço de retorno original pelo novo endereço que aponta para o _shellcode_ calculado anteriormente (```ret```). <br> <br>
+> De seguida corremos o _script_ ```exploit.py``` que nos gerou o ficheiro ```badfile```. <br><br>
+> Depois executamos o programa ```stack-L1``` que deu _trigger_ a um _buffer overflow_ e lançou uma _shell_ com permissões _root_.
 
