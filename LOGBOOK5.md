@@ -73,9 +73,9 @@
 > 2. A _return address_ pusemos igual ao início do _buffer_ e acrescentamos um número maior do que 200 de modo a entrarmos na área NOP (Figura 4) (neste caso tentamos com 300 ao início e não deu mas com 400 já deu).
 > ![shellcodefigure](images/logbook5/shellcodefigure.png)<br>
 > Figura 4<br><br>
-> 3. Como não sabemos o tamanho do _buffer_ vamos ter de dar _spray_ ao _buffer_ para por a _return address_ em muitos lugares para desse modo pelo menos um dos endereços ser o _actual return address_. Foi isso que fizemos no _for loop_. Usamos 50 de _range_ no _for loop_ uma vez que disseram nos que o tamanho do _buffer_ ia até no máximo 200, ou seja, como cada endereço em 32-bit ocupa 4 bytes 200/4=50. <br><br>
+> 3. Como não sabemos o tamanho do _buffer_ vamos ter de dar _spray_ ao _buffer_ para por a _return address_ em muitos lugares para desse modo pelo menos um dos endereços ser o _actual return address_. Foi isso que fizemos no _for loop_. Usamos 50 de _range_ no _for loop_ uma vez que o tamanho do _buffer_ vai até no máximo 200, ou seja, como cada endereço em 32-bit ocupa 4 bytes ```200 / 4 = 50```. <br><br>
 > Depois executamos o programa ```stack-L2``` que deu _trigger_ a um _buffer overflow_ e lançou uma _shell_ com permissões _root_.<br><br>
->![rootshell2](images/logbook5/rootshelltask4.png)
-> Figura 2: Root Shell
+>![rootshell2](images/logbook5/rootshelltask4.png)<br>
+> Figura 5: Root Shell
 
 
