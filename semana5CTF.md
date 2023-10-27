@@ -128,7 +128,7 @@ int main() {
 
 <br>
 
-> 1. 
+> 1. Na segunda versão, foram adicionados dois caracteres nulos no final da _string_ `meme_file`, e um novo `if` foi introduzido para verificar se a variável `val` é igual a `0xfefc2324` antes de continuar o que fazia no programa anterior ou dar print a uma mensagem de desqualificação.
 
 <br>
 
@@ -136,7 +136,7 @@ int main() {
 
 <br>
 
-> 2. 
+> 2. As alterações na segunda versão mitigam parcialmente o problema, uma vez que introduzem uma nova condição, mas ainda é possível contornar esta nova versão se a variável `val` for ajustada para o valor correto (feito no _script_ em _python_ abaixo).
 
 <br>
 
@@ -144,7 +144,7 @@ int main() {
 
 <br>
 
-> 3. 
+> 3. É possível ultrapassar a mitigação na segunda versão usando uma técnica similar à que foi utilizada anteriormente. Primeiro inserimos 32 caracteres (de maneira igual ao que fizemos no desafio anterior), de seguida inserimos o valor de `val` (`\x24\x23\xfc\xfe` (tem de ser escrito ao contrário porque o sistema é _little endian_)) seguido do nome do ficheiro (`flag.txt`), e desta maneira conseguimos obter a _flag_. 
 
 <br>
 
