@@ -24,3 +24,16 @@
 
 ## Desafio 2
 
+> Inicialmente, exploramos os ficheiros disponibilizados, que são os mesmos em execução no servidor na porta 4005. Ao utilizar o comando ```checksec```, verificamos que o executável ```program``` não possui um executável independente de posição, o que significa que o código não é alocado num local da memória que permita a execução independentemente do seu endereço absoluto. Adicionalmente, inclui um canário na _stack_, uma medida preventiva usada para proteger contra _buffer overflows_.
+> <br><br>Ao analisarmos o ficheiro ```main.c```, observamos que, para efetuar um ataque bem sucedido e aceder ao valor da _flag_, é necessário modificar o valor da nossa variável ```key``` para ```beef```, que em decimal é convertido para 4779.
+> <br><br>De seguida, precisamos de encontrar o endereço de memória da variável ```key``` da seguinte maneira:<br><br>
+![key](images/ctf7/key.png)
+> <br><br>Agora precisamos de alterar o valor de ```key``` para 4779 (beef). Para alcançar o objetivo, é necessário escrever 4775 _bytes_ (acrescidos de 4 _bytes_ para o endereço desejado) antes de utilizar o ```%n```. Também é preciso referenciar adequadamente o endereço ao qual o ```%n``` irá escrever o valor. Devemos incluir um ```$1``` junto ao ```%n``` para que este aponte para os primeiros 4 _bytes_ que foram enviados. Portanto, o _script_ deve ser alterado da seguinte forma:
+> ```python
+> p.recvuntil(b"here...")
+> p.sendline(b"\x24\xb3\x04\x08" + b"%48875x" + b"%1$n")
+> p.interactive()
+> ```
+> Executando o _script_ obtemos:<br><br>
+> ![flagDesafio2](images/ctf7/flagDesafio2.png)
+
