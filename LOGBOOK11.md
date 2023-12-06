@@ -213,6 +213,9 @@ coefficient:
 ## Task 2: Generating a Certificate Request for your Web Server
 
 > Criámos um certificado para o _site_ ```www.bank32.com``` utilizando o seguinte comando:<br><br>
+```bash
+$ openssl req -newkey rsa:2048 -sha256 -keyout server.key -out server.csr -subj "/CN=www.bank32.com/0=Bank32 Inc./C=US" -passout pass:abcd -addext "subjectAltName = DNS:www.bank32.com, DNS:www.bank32A.com, DNS:www.bank32A.com"
+```
 > Certificado do _site_:
 ```
 Certificate Request:
@@ -357,6 +360,57 @@ coefficient:
 
 ## Task 3: Generating a Certificate for your server
 
+> Para gerar um certificado para o nosso servidor ```www.bank32.com```, executamos o seguinte comando:
+```bash
+$ openssl ca -config openssl.cnf -policy policy_anything -md sha256 -days 3650 -in server.csr -out server.crt -batch -cert ca.crt -keyfile ca.key
+```
+> O conteúdo de ```server.crt``` confirma que é um certificado para o ```www.bank32.com```:
+![servercrt1](images/logbook11/servercrt1.png)
+![servercrt2](images/logbook11/servercrt2.png)
+> Para verificar a abrangência do certificado, descomentamos a linha do ```copy_extensions=copy``` e executamos o seguinte comando:
+```bash
+$ openssl x509 -in server.crt -text -noout
+```
+> O resultado mostrou que o certificado cobre todos os nomes especificados na tarefa anterior:
+> 1. ```www.bank32.com```
+> 2. ```www.bank32A.com```
+> 3. ```www.bank32B.com```
+![altNames](images/logbook11/altNames.png)
+
+##  Task 4: Deploying Certificate in an Apache-Based HTTPS Website
+
+> Para esta tarefa transferimos os ficheiros ```server.crt``` e ```server.key``` para a pasta partilhada ```/volumes``` e renomeamo-los para bank32, mantendo as respetivas extensões. Alteramos o arquivo ```etc/apache2/sites-available/bank32_apache_ssl.conf``` dentro do _container_, de forma a que o certificado e a chave utilizados sejam os da pasta partilhada:
+![apache1](images/logbook11/apache1.png)
+> Para arrancar com o servidor _Apache_, foi necessário primeiro abrir uma _shell_ no _container_ e executar os seguintes comandos:
+```bash
+$ service apache2 start
+```
+> Quando tentámos aceder ao site ```https://bank32.com```, percebemos que a ligação era insegura (não estava cifrada):
+![connectionNotSecure](images/logbook11/connectionNotSecure.png)
+> Para assegurar uma ligação segura, adicionámos o certificado CA que gerámos às autoridades confiáveis no browser, em ```about:preferences#privacy``` -> Certificados -> Ver Certificados -> Autoridades -> Importar, e confirmámos que a ligação passou a ser segura:
+![connectionSecure](images/logbook11/connectionSecure.png)
+
+## Task 5: Launching a Man-In-The-Middle Attack
+
+> Para esta tarefa a configuração do servidor foi alterada para agora apresentar o site ```www.example.com``` com as configurações anteriores. O ficheiro ```etc/apache2/sites-available/bank32_apache_ssl.conf``` ficou assim:
+![apache2](images/logbook11/apache2.png)
+> Também alterámos o DNS da vítima, associando o hostname ```www.example.com``` ao IP do servidor web malicioso.
+> <br><br>Ao reconstruir o servidor e aceder ao site ```www.example.com```, verificámos que o navegador alertava para um risco potencial:
+![warning](images/logbook11/warning.png)
+![Alt text](images/logbook11/image-5.png)
+> Isto ocorreu devido à inconsistência do certificado utilizado, pois o nome de domínio não coincidia com o que estava presente no certificado do servidor.
+
+## Task 6: Launching a Man-In-The-Middle Attack with a Compromised CA
+
+> Supondo que a nossa CA estivesse comprometida, poderíamos usá-la para criar certificados para um site malicioso. Neste caso, queríamos criar um certificado para o site ```www.example.com```, então repetimos os comandos da Task 2:
+```bash
+$ openssl req -newkey rsa:2048 -sha256 -keyout example.key -out example.csr -subj "/CN=www.example.com/O=example Inc./C=US" -passout pass:abcd
+$ openssl ca -config openssl.cnf -policy policy_anything -md sha256 -days 3650 -in example.csr -out example.crt -batch -cert ca.crt -keyfile ca.key
+```
+> Depois, modificámos o ficheiro de configuração do servidor ```etc/apache2/sites-available/bank32_apache_ssl.conf``` para usar os dois ficheiros gerados ```example.csr``` e ```example.key```:
+![apache3](images/logbook11/apache3.png)
+> Após reiniciar o servidor e ir a ```www.example.com```, confirmámos que a ligação já é segura:
+![connectionSecure2](images/logbook11/connectionSecure2.png)
 
 
 
