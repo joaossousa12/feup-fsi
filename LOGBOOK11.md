@@ -205,14 +205,157 @@ coefficient:
     ac
 ```
 > Nele, podemos identificar os seguintes elementos:
-1. Os dois números primos (campo ```prime1``` e ```prime2```).
-2. O _modulus_ (campo ```modulus```).
-3. Os expoentes públicos e privados (campo ```publicExponent``` e ```privateExponent```).
-4. O coeficiente (campo ```coeficient```).
+> 1. Os dois números primos (campo ```prime1``` e ```prime2```).
+> 2. O _modulus_ (campo ```modulus```).
+> 3. Os expoentes públicos e privados (campo ```publicExponent``` e ```privateExponent```).
+> 4. O coeficiente (campo ```coeficient```).
 
 ## Task 2: Generating a Certificate Request for your Web Server
 
+> Criámos um certificado para o _site_ ```www.bank32.com``` utilizando o seguinte comando:<br><br>
+> Certificado do _site_:
+```
+Certificate Request:
+    Data:
+        Version: 1 (0x0)
+        Subject: CN = www.bank32.com, O = Bank32 Inc., C = US
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:c5:b6:a5:fb:c2:2c:78:0c:34:6a:06:70:96:97:
+                    7c:8a:0f:dd:b8:17:d7:b1:3f:b0:b1:5c:c7:ee:04:
+                    e4:2e:53:63:06:29:4f:5f:bf:d3:b9:ec:68:4f:6d:
+                    2b:41:cc:b2:d6:75:eb:70:98:b4:23:37:76:ed:df:
+                    1d:df:d1:52:be:85:df:4d:db:ca:35:de:87:62:5a:
+                    0d:36:d3:dc:5d:09:cc:18:c5:77:b5:8d:ea:9e:6b:
+                    fb:ec:51:d0:d5:17:05:8f:03:49:e4:56:ef:84:ca:
+                    d2:69:87:0a:fc:fa:a0:ff:8e:95:c3:aa:c2:28:0f:
+                    3c:91:44:1b:05:7f:64:57:9f:83:08:03:62:62:51:
+                    e7:a3:f6:38:eb:b7:40:7c:73:d9:8e:0e:37:ef:d2:
+                    0a:5b:75:49:dd:3d:23:42:1d:b7:62:a1:96:4e:0b:
+                    b5:78:8a:76:fa:2d:c9:9c:25:2c:08:f7:70:bc:cc:
+                    18:8f:a9:22:72:21:37:69:3c:59:9c:a8:9e:4a:41:
+                    96:f2:2d:53:a7:78:43:99:c9:69:b3:34:4c:4c:d1:
+                    c0:a9:76:16:33:c8:de:91:a6:c9:3f:53:6d:14:a3:
+                    8a:6e:31:7c:0d:cf:ab:42:a4:87:7d:20:ba:cc:3d:
+                    6b:7f:06:ed:84:d0:66:a5:ad:60:87:2a:d9:ac:5a:
+                    b2:0b
+                Exponent: 65537 (0x10001)
+        Attributes:
+            a0:00
+    Signature Algorithm: sha256WithRSAEncryption
+         34:c2:bd:b6:be:44:01:18:48:e2:05:1e:bf:00:d8:56:93:16:
+         f4:c3:d6:7e:f2:b4:e4:d8:4d:ba:20:69:19:df:59:d0:5d:52:
+         63:f0:3d:df:f2:ec:f7:80:21:1e:be:ef:98:a4:a3:9c:43:63:
+         93:c3:81:60:4d:6d:32:aa:e0:f5:bc:3b:d5:7f:c7:d0:91:b0:
+         22:e7:83:b7:e5:ae:cd:85:4b:7e:7b:9b:e1:bf:29:a1:41:ff:
+         98:c2:e9:0f:e3:a9:34:71:6e:3b:0f:d2:df:9c:69:43:2e:3c:
+         34:fa:97:7d:c5:6f:54:8a:cc:66:f1:1f:ec:c5:ec:b7:01:16:
+         c1:31:15:a7:3f:90:ca:78:7a:c1:8d:24:20:da:69:71:bd:b0:
+         b5:22:c4:3f:94:c6:59:61:46:c0:9f:6a:bc:52:65:db:16:98:
+         64:37:b8:29:be:f4:f5:3f:55:48:25:15:30:0f:d0:bc:30:a7:
+         4b:81:03:04:93:01:ae:1b:bd:8a:00:94:f4:f4:07:05:ae:4e:
+         3c:44:64:5b:4e:80:00:4b:f6:f5:74:d7:65:06:b0:d8:2d:7a:
+         8b:72:50:04:86:07:11:ab:bb:f8:dc:22:cf:31:0a:9a:a4:26:
+         8f:a8:52:ec:23:fb:58:bd:b9:c0:3b:9d:ff:fd:22:b7:f3:fd:
+         36:f7:2d:93
+```
+> _RSA_ do _site_:
+```
+RSA Private-Key: (2048 bit, 2 primes)
+modulus:
+    00:c5:b6:a5:fb:c2:2c:78:0c:34:6a:06:70:96:97:
+    7c:8a:0f:dd:b8:17:d7:b1:3f:b0:b1:5c:c7:ee:04:
+    e4:2e:53:63:06:29:4f:5f:bf:d3:b9:ec:68:4f:6d:
+    2b:41:cc:b2:d6:75:eb:70:98:b4:23:37:76:ed:df:
+    1d:df:d1:52:be:85:df:4d:db:ca:35:de:87:62:5a:
+    0d:36:d3:dc:5d:09:cc:18:c5:77:b5:8d:ea:9e:6b:
+    fb:ec:51:d0:d5:17:05:8f:03:49:e4:56:ef:84:ca:
+    d2:69:87:0a:fc:fa:a0:ff:8e:95:c3:aa:c2:28:0f:
+    3c:91:44:1b:05:7f:64:57:9f:83:08:03:62:62:51:
+    e7:a3:f6:38:eb:b7:40:7c:73:d9:8e:0e:37:ef:d2:
+    0a:5b:75:49:dd:3d:23:42:1d:b7:62:a1:96:4e:0b:
+    b5:78:8a:76:fa:2d:c9:9c:25:2c:08:f7:70:bc:cc:
+    18:8f:a9:22:72:21:37:69:3c:59:9c:a8:9e:4a:41:
+    96:f2:2d:53:a7:78:43:99:c9:69:b3:34:4c:4c:d1:
+    c0:a9:76:16:33:c8:de:91:a6:c9:3f:53:6d:14:a3:
+    8a:6e:31:7c:0d:cf:ab:42:a4:87:7d:20:ba:cc:3d:
+    6b:7f:06:ed:84:d0:66:a5:ad:60:87:2a:d9:ac:5a:
+    b2:0b
+publicExponent: 65537 (0x10001)
+privateExponent:
+    00:c4:7c:51:d4:33:12:52:73:7e:9b:67:ae:f8:59:
+    af:f0:dc:f7:b1:7e:30:62:fc:32:b2:f0:cb:d8:25:
+    90:46:e1:a3:e5:79:a4:62:39:97:46:8c:44:d5:ba:
+    5e:64:d3:f3:5e:e2:6d:8a:c6:97:2e:f0:6e:06:d3:
+    d7:32:99:2a:2c:21:8a:dc:2b:73:77:b9:a0:be:03:
+    54:62:8a:85:d3:08:6b:86:aa:a7:df:0c:1c:80:38:
+    3c:72:8c:94:87:50:8b:bb:a6:bf:06:67:c7:3d:26:
+    fb:98:d8:15:f9:77:72:0c:c7:3c:da:e9:96:6e:8d:
+    45:d9:ef:df:12:c5:99:88:e1:43:26:99:0b:af:08:
+    67:f0:17:34:24:55:d5:67:b5:5b:b2:9c:fe:96:9b:
+    71:18:0b:9d:44:7a:b7:a1:e8:7e:14:e4:26:f4:bd:
+    20:1d:49:27:1a:08:a1:f8:a0:39:a0:58:0d:47:0b:
+    3d:16:3e:92:8b:c2:f5:fb:f4:04:e8:cd:2f:79:57:
+    8d:0f:b5:33:90:a3:65:01:e3:6f:ad:d5:5e:40:74:
+    59:99:39:b4:45:f5:84:6e:7e:8e:8f:00:66:2b:95:
+    92:29:a1:0f:eb:29:79:a8:17:bd:54:cd:0b:a9:a3:
+    38:15:f5:31:f1:96:ab:58:00:fd:61:b1:06:be:79:
+    4f:41
+prime1:
+    00:ef:5a:ca:7f:5e:3d:ef:59:47:8a:97:df:21:a5:
+    b2:65:d3:af:9c:6c:48:b6:85:8b:31:bc:86:d6:2b:
+    a8:05:3b:7b:71:d5:0f:b8:8e:61:3d:89:dc:4e:d4:
+    0b:7d:25:89:2a:26:8f:ca:67:7e:d5:46:5c:69:67:
+    47:c5:00:09:ac:7e:67:42:28:9c:15:4e:7c:68:f8:
+    a8:4f:28:d9:e3:b3:81:bb:30:70:f3:60:95:e6:ab:
+    45:ec:a7:8d:0d:59:1f:78:17:34:e2:6a:8b:78:67:
+    80:30:ec:f0:5c:86:3d:df:ac:58:e0:45:fe:31:e1:
+    c8:cd:a0:f6:b3:ea:ae:34:d1
+prime2:
+    00:d3:76:85:f0:f0:14:29:a0:6d:86:c3:8f:51:a3:
+    c7:d8:76:27:bb:48:51:61:67:f2:fc:eb:77:df:f8:
+    c8:81:7e:98:98:23:88:62:b9:36:53:d4:fd:67:70:
+    2a:06:8d:e4:f1:29:a9:99:5b:f2:c4:4e:60:2e:ae:
+    5b:ff:c3:bc:e3:01:de:f9:bf:ed:b1:b2:14:31:95:
+    c0:9d:f3:7e:1b:20:a0:04:49:90:92:76:96:4d:0b:
+    66:96:9f:3f:44:4a:02:50:ce:db:7b:91:5a:65:3d:
+    7a:e6:6b:cc:47:12:85:05:c8:ed:4d:a8:30:b3:b2:
+    86:b2:a1:d9:55:4b:91:20:1b
+exponent1:
+    00:e4:76:b9:d0:a7:48:e0:dc:4c:10:3a:f4:6d:6e:
+    76:81:01:74:9f:0f:30:bc:9f:6d:84:74:da:13:35:
+    aa:74:0c:19:c1:46:c8:71:b5:dd:95:5a:b0:a1:c1:
+    7e:91:de:b1:35:3d:87:84:80:13:2d:49:b2:cd:9d:
+    1a:81:2c:8f:0f:49:bc:10:07:29:2c:a1:34:d9:11:
+    77:bd:cf:55:63:25:a5:4f:e2:65:fd:b8:94:7c:8f:
+    c0:f7:a9:da:56:02:5a:aa:4b:24:5c:75:ac:58:aa:
+    1a:4f:18:ea:38:b6:9d:fa:90:cc:68:8e:06:9a:e0:
+    53:c6:0a:bd:50:70:52:05:f1
+exponent2:
+    1f:21:63:b6:84:a1:73:3f:5a:e0:6c:09:bd:4b:0f:
+    30:9e:b4:5a:ad:da:cd:2c:30:69:6b:80:ca:48:25:
+    bc:6a:96:ac:4f:0e:d4:f9:cf:35:a8:35:65:f4:ed:
+    3a:e9:c8:ba:78:17:af:ac:09:a1:3c:a8:8c:36:be:
+    f4:78:2c:66:7e:f0:04:74:6c:d9:ac:0d:ac:ff:0e:
+    cc:31:fc:6e:a1:ee:ec:b2:a7:c5:e8:0f:58:68:45:
+    42:07:4f:99:0e:0c:29:39:4a:b6:76:3f:88:87:f4:
+    7f:d7:7e:cb:37:be:bd:8b:46:e4:17:ce:93:a5:c4:
+    8e:a7:a5:07:19:88:d3:e1
+coefficient:
+    00:dd:70:47:17:da:ec:85:57:02:ac:39:c6:e7:cb:
+    c7:96:73:9c:17:30:49:6c:cc:a1:6f:94:ab:e7:aa:
+    9b:ff:f1:06:8e:89:90:45:a2:51:7a:87:df:86:98:
+    24:ab:25:1b:1d:9f:94:aa:e1:4b:82:ef:4b:07:e1:
+    ad:f0:4e:80:ee:81:76:b3:50:aa:6a:03:04:d1:18:
+    58:16:c4:4d:fd:40:9e:76:51:d8:eb:74:00:f6:15:
+    62:99:33:70:6d:9f:4e:8f:bf:14:a1:8c:ab:87:04:
+    32:ca:6d:5c:76:7f:5c:ad:18:4a:7b:5e:d4:b5:f0:
+    61:54:92:1e:19:73:03:d4:4a
+```
 
+## Task 3: Generating a Certificate for your server
 
 
 
