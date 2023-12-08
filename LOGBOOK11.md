@@ -407,7 +407,7 @@ $ service apache2 start
 $ openssl req -newkey rsa:2048 -sha256 -keyout example.key -out example.csr -subj "/CN=www.example.com/O=example Inc./C=US" -passout pass:abcd
 $ openssl ca -config openssl.cnf -policy policy_anything -md sha256 -days 3650 -in example.csr -out example.crt -batch -cert ca.crt -keyfile ca.key
 ```
-> Depois, modificámos o ficheiro de configuração do servidor ```etc/apache2/sites-available/bank32_apache_ssl.conf``` para usar os dois ficheiros gerados ```example.csr``` e ```example.key```:
+> Depois, modificámos o ficheiro de configuração do servidor ```etc/apache2/sites-available/bank32_apache_ssl.conf``` para usar os dois ficheiros gerados ```example.crt``` e ```example.key```:
 ![apache3](images/logbook11/apache3.png)
 > Após reiniciar o servidor e ir a ```www.example.com```, confirmámos que a ligação já é segura:
 ![connectionSecure2](images/logbook11/connectionSecure2.png)
