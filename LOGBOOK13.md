@@ -187,6 +187,34 @@ pkt = sniff(iface='br-c63567c8961a', filter='net 128.230.0.0/16', prn=print_pkt)
 
 ## Task 1.2: Spoofing ICMP Packets
 
+> Para resolver esta tarefa começamos por criar um script ```task1.2.py``` com o código fornecido mudando o a.dst para um endereço arbitrario neste caso ```1.2.3.4```.
+
+```python
+#!/usr/bin/env python3
+from scapy.all import *
+
+a= IP()
+a.dst = '1.2.3.4'
+b = ICMP()
+p = a / b
+
+ls(a)
+
+send(p)
+```
+
+> O script foi executado com sucesso, como demonstrado na imagem abaixo, onde se observa a confirmação do envio de um pacote.
+
+![PacketSent](images/logbook13/packetSent.png)
+
+> Abrindo o Wireshark na interface ```enp0s3``` e com o filtro ```host 1.2.3.4``` conseguimos observar o pacote IMCP forjado a ser enviado para o endereço ```1.2.3.4```. Esta captura foi essencial para validarmos o sucesso do nosso script de spoofing.
+
+![Wireshark](images/logbook13/wireshark.png)
+
+> A tarefa foi bem-sucedida, demonstrando a capacidade do Scapy em forjar pacotes ICMP e alterar o endereço IP de destino.
+
 ## Task 1.3: Traceroute
+
+
 
 ## Task 1.4: Sniffing and-then Spoofing
