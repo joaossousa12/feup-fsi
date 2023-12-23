@@ -215,6 +215,23 @@ send(p)
 
 ## Task 1.3: Traceroute
 
+> O objetivo desta tarefa é encontrar o numero de routers entre a nossa VM e o destino selecionado. Para determinar isso pegamos no script de python dado e fizemos as seguintes alterações de modo a conseguirmos alterar o valor do field ttl no terminal em vez de estarmos sempre a mudar no script e de modo a dar display ao source ip e também mudamos o a.dst para ```8.8.8.8``` como pedido:
 
+```python
+#!/usr/bin/env python3
+from scapy.all import *
+import sys
+
+a = IP()
+a.dst= '8.8.8.8'
+a.ttl = int(sys.argv[1])
+b = ICMP()
+d= sr1(a/b)
+print("Source IP: ", d.src)
+```
+
+![sucesso](images/logbook13/image.png)
+
+> Depois de executarmos o script verificamos que o teste foi realizado com sucesso, identificando-se a quantidade de routers até ao destino. Qunado o TTL foi definido como 15, o router final respondeu, indicando que o destino está a uma distância de aproximadamente 15 routers.
 
 ## Task 1.4: Sniffing and-then Spoofing
