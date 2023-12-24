@@ -236,7 +236,7 @@ print("Source IP: ", d.src)
 
 ## Task 1.4: Sniffing and-then Spoofing
 
-> O objetivo desta tarefa é combinar técnicas de interceção (sniffing) e falsificação (spoofing) de pacotes para criar um programa que responda automaticamente a pedidos de echo ICMP (ping), independentemente da existência do alvo. <br><br>
+> O objetivo desta tarefa é combinar sniffing e spoofing de pacotes para criar um programa que responda automaticamente a pedidos de echo ICMP (ping), independentemente da existência do alvo. <br><br>
 > Para resolver isto, utilizamos o seguinte script Python que basicamente intercepta pacotes ICMP de tipo "echo request" e, para cada um deles, envia de volta um pacote ICMP de tipo "echo reply" com o endereço IP de origem falsificado, fazendo parecer que o host alvo está ativo e a responder aos pings.
 
 ```python
