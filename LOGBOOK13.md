@@ -235,3 +235,56 @@ print("Source IP: ", d.src)
 > Depois de executarmos o script verificamos que o teste foi realizado com sucesso, identificando-se a quantidade de routers até ao destino. Qunado o TTL foi definido como 15, o router final respondeu, indicando que o destino está a uma distância de aproximadamente 15 routers.
 
 ## Task 1.4: Sniffing and-then Spoofing
+
+> O objetivo desta tarefa é combinar técnicas de interceção (sniffing) e falsificação (spoofing) de pacotes para criar um programa que responda automaticamente a pedidos de echo ICMP (ping), independentemente da existência do alvo. <br><br>
+> Para resolver isto, criamos o seguinte script Python que basicamente intercepta pacotes ICMP de tipo "echo request" e, para cada um deles, envia de volta um pacote ICMP de tipo "echo reply" com o endereço IP de origem falsificado, fazendo parecer que o host alvo está ativo e a responder aos pings.
+
+```python
+#!/usr/bin/env python3
+from scapy.all import *
+import sys
+import os
+
+def spoof_pkt(pkt):
+    if ICMP in pkt and pkt[ICMP].type == 8:
+        print("Original Packet.........")
+        print("Source IP : ", pkt[IP].src)
+        print("Destination IP :", pkt[IP].dst)
+
+        ip = IP(src=pkt[IP].dst, dst=pkt[IP].src, ihl=pkt[IP].ihl)
+        icmp = ICMP(type=0, id=pkt[ICMP].id, seq=pkt[ICMP].seq)
+        data = pkt[Raw].load
+        
+        newpkt = ip/icmp/data
+
+        print("Spoofed Packet.........")
+        print("Source IP : ", newpkt[IP].src)
+        print("Destination IP :", newpkt[IP].dst)
+
+        send(newpkt, verbose=0)
+        
+filter = 'icmp and host x.x.x.x'
+pkt = sniff(iface='br-c63567c8961a',filter=filter, prn=spoof_pkt)
+```
+
+> ```1.2.3.4```: 
+
+![Alt text](images/logbook13/image-1.png)
+
+![Alt text](images/logbook13/image-5.png)
+
+> Este endereço é um host inexistente na Internet. No entanto, o script está a responder aos pings como se o host estivesse ativo. Isso demonstra a eficácia do script em fazer parecer que um endereço IP inexistente está ativo, evidenciado pela resposta bem-sucedida dos pings.
+
+> ```10.9.0.99```:
+
+![Alt text](images/logbook13/image-2.png)
+
+> Este é um host inexistente na LAN. As mensagens de "Destination Host Unreachable" indicam que o ping não está a encontrar um caminho para o endereço na rede local. 
+
+> ```8.8.8.8```: 
+
+![Alt text](images/logbook13/image-3.png)
+
+![Alt text](images/logbook13/image-4.png)
+
+> Este é um host existente na Internet (google). As respostas de ping são bem-sucedidas, o que é esperado para um host ativo. O script também está a enviar respostas falsificadas, mas essas respostas são desnecessarias porque o host real responderá independentemente.
