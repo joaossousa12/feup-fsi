@@ -267,24 +267,24 @@ filter = 'icmp and host x.x.x.x'
 pkt = sniff(iface='br-c63567c8961a',filter=filter, prn=spoof_pkt)
 ```
 
-> ```1.2.3.4```: 
+> ```1.2.3.4```:
+
+> Este endereço é um host inexistente na Internet. No entanto, o script está a responder aos pings como se o host estivesse ativo. Isso demonstra a eficácia do script em fazer parecer que um endereço IP inexistente está ativo, evidenciado pela resposta bem-sucedida dos pings.
 
 ![Alt text](images/logbook13/image-1.png)
 
 ![Alt text](images/logbook13/image-5.png)
 
-> Este endereço é um host inexistente na Internet. No entanto, o script está a responder aos pings como se o host estivesse ativo. Isso demonstra a eficácia do script em fazer parecer que um endereço IP inexistente está ativo, evidenciado pela resposta bem-sucedida dos pings.
-
 > ```10.9.0.99```:
-
-![Alt text](images/logbook13/image-2.png)
 
 > Este é um host inexistente na LAN. As mensagens de "Destination Host Unreachable" indicam que o ping não está a encontrar um caminho para o endereço na rede local. 
 
+![Alt text](images/logbook13/image-2.png)
+
 > ```8.8.8.8```: 
+
+> Este é um host existente na Internet (google). As respostas de ping são bem-sucedidas, o que é esperado para um host ativo. O script também está a enviar respostas falsificadas, mas essas respostas são desnecessarias porque o host real responderá independentemente.
 
 ![Alt text](images/logbook13/image-3.png)
 
 ![Alt text](images/logbook13/image-4.png)
-
-> Este é um host existente na Internet (google). As respostas de ping são bem-sucedidas, o que é esperado para um host ativo. O script também está a enviar respostas falsificadas, mas essas respostas são desnecessarias porque o host real responderá independentemente.
